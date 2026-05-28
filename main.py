@@ -8,11 +8,6 @@ x = 50
 y = 450
 vel = 0.3
 
-# meteorite
-m_x = random.randint(32, 500-32)
-y = 16
-vel = 0.5
-
 # settings
 pygame.time.delay(100)
 run = True
