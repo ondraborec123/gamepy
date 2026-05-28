@@ -11,17 +11,23 @@ icon = pygame.image.load("assets/lilnig.png")
 pygame.display.set_icon(icon)
 pygame.time.delay(100)
 run = True
+pause = False
 
 # FONTS AND TEXTS
 comicsans = pygame.font.Font("assets/comicsans.ttf", 28)
 
-nadpis_var = "Welcome to best game in all of Czechia, Slovakia AND Ukraine!!"
-nadpis = comicsans.render(nadpis_var, True, (255, 0, 0))
-nadpis_rect = nadpis.get_rect()
-nadpis_rect.center = (c.WIDTH / 2, 100)
+help_var = "**PAUSED**"
+helpm = comicsans.render(help_var, True, (255, 0, 0))
+help_rect = helpm.get_rect()
+help_rect.center = (c.WIDTH / 2, 100)
 
 # FUNCTIONS
+def pause_menu():
+	global helpm, help_var, help_rect
+	window.blit(helpm, help_rect)
+
 def player_function():
+	global pause
 	plr = pygame.image.load("assets/ch0.0.png")
 	window.blit(plr, (player.x,player.y))
 	keys = pygame.key.get_pressed()
