@@ -1,25 +1,32 @@
 # IMPORTS
 import player
 import pygame
-import constants as c
+import settings as s
 
 # BASE SETTINGS
 pygame.init()
-window = pygame.display.set_mode((c.WIDTH, c.HEIGHT))
+ACTIVE_RES=3
+window = pygame.display.set_mode(s.resolutions[ACTIVE_RES])
+WIDTH=s.resolutions[ACTIVE_RES][0]
+HEIGHT=s.resolutions[ACTIVE_RES][1]
+if s.fullscreen:
+	pygame.display.toggle_fullscreen()
 pygame.display.set_caption("Best game CZ/SK/UA")
 icon = pygame.image.load("assets/lilnig.png")
 pygame.display.set_icon(icon)
-pygame.time.delay(100)
+
+clock = pygame.time.Clock()
+delta_time = 0
 run = True
 pause = False
 
 # FONTS AND TEXTS
 comicsans = pygame.font.Font("assets/comicsans.ttf", 28)
 
-help_var = "**PAUSED**"
-helpm = comicsans.render(help_var, True, (255, 0, 0))
-help_rect = helpm.get_rect()
-help_rect.center = (c.WIDTH / 2, 100)
+pauset_var = "**PAUSED**"
+pauset = comicsans.render(pauset_var, True, (255, 0, 0))
+pauset_rect = pauset.get_rect()
+pauset_rect.center = (WIDTH / 2, 100)
 
 # FUNCTIONS
 def pause_menu():
@@ -27,14 +34,15 @@ def pause_menu():
 	window.blit(helpm, help_rect)
 
 def player_function():
-	global pause
+	global pause, run
 	plr = pygame.image.load("assets/ch0.0.png")
-	window.blit(plr, (player.x,player.y))
+	window.blit(plr, (round(player.x),round(player.y)))
 	keys = pygame.key.get_pressed()
 	if keys[pygame.K_w] and player.y > 0 or keys[pygame.K_UP] and player.y > 0: player.y -= player.vel
-	if keys[pygame.K_s] and player.y < c.HEIGHT-96 or keys[pygame.K_DOWN] and player.y < c.HEIGHT-96: player.y += player.vel
+	if keys[pygame.K_s] and player.y < HEIGHT-96 or keys[pygame.K_DOWN] and player.y < HEIGHT-96: player.y += player.vel
 	if keys[pygame.K_a] and player.x > -18 or keys[pygame.K_LEFT] and player.x > 0-18: player.x -= player.vel
-	if keys[pygame.K_d] and player.x < c.WIDTH-78 or keys[pygame.K_RIGHT] and player.x < c.WIDTH-78: player.x += player.vel
+	if keys[pygame.K_d] and player.x < WIDTH-78 or keys[pygame.K_RIGHT] and player.x < WIDTH-78: player.x += player.vel
+	if keys[pygame.K_ESCAPE]: run = False
 
 
 # MAIN LOOP
@@ -48,5 +56,6 @@ while run:
 
 	# update screen
 	pygame.display.update()
+	delta_time = clock.tick(240) / 1000
 
 pygame.quit()
