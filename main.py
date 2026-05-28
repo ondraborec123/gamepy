@@ -1,55 +1,53 @@
-import player
-import pygame
+# IMPORTS
+import tkinter as tk
 import constants as c
-pygame.init()
-window = pygame.display.set_mode((c.WIDTH, c.HEIGHT))
-pygame.display.set_caption("Best game CZ/SK/UA")
-# settings
-pygame.time.delay(100)
-run = True
+import os
 
-# font and texts
-comicsans = pygame.font.Font("assets/comicsans.ttf", 28)
-
-nadpis_var = "Welcome to best game in all of Czechia, Slovakia AND Ukraine!!"
-nadpis = comicsans.render(nadpis_var, True, (255, 0, 0))
-nadpis_rect = nadpis.get_rect()
-nadpis_rect.center = (c.WIDTH/2,100)
+# WINDOW
+bg="skyblue"
+wn = tk.Tk()
+wn.geometry(f"{c.WIDTH}x{c.HEIGHT}")
+wn.iconphoto(False, tk.PhotoImage(file="assets/lilnig.png"))
+wn.configure(background=bg)
+wn.resizable(False, False)
+wn.title("Best game CZ/SK/UA")
 
 # FUNCTIONS
-def player_function():
-	plr = pygame.image.load("assets/lilnig.png")
-	window.blit(plr, (player.x,player.y))
-	keys = pygame.key.get_pressed()
-	if keys[pygame.K_w] and player.y > 0: player.y -= player.vel
-	if keys[pygame.K_s] and player.y < 500-32: player.y += player.vel
-	if keys[pygame.K_a] and player.x > 0: player.x -= player.vel
-	if keys[pygame.K_d] and player.x < 500-32: player.x += player.vel
+def credits():
+    wn.destroy()
+    def ok():
+        wn2.destroy()
+        os.system("python3 main.py")
+    wn2=tk.Tk()
+    wn2.iconphoto(False, tk.PhotoImage(file="assets/lilnig.png"))
+    wn2.geometry(f"{c.WIDTH}x{c.HEIGHT}")
+    wn2.configure(background=bg)
+    wn2.resizable(False, False)
+    wn2.title("Best game CZ/SK/UA")
+    lblc=tk.Label(wn2, text="CREDITS\nGraphics: Karel Mracek\nProgramming: Ondrej Selucky\nFinger: jew\nHotel: Trivago\nERIK HANYS: TESTOSTERON++", font=("Arial", 20), background=bg)
+    lblc.place(x=c.WIDTH/5, y=100)
+    okbtn = tk.Button(wn2, text="OK", font=("Arial", 40), width=9,command=ok,background="cyan")
+    okbtn.place(x=c.WIDTH/5, y=500)
 
-# class Button:
-# 	def __init__(self,x,y,width,height):
-# 		global window
-# 		self.x = x
-# 		self.y = y
-#
-# 		self.btn = pygame.Rect(x, y, 150, 70)
-# 		pygame.draw.rect(window, colour, btn)
-# 		txt = comicsans.render(text, True, (255, 0, 0))
-# 		txt_rect = txt.get_rect()
-# 		txt_rect.center = (x+x/4, y+y/7)
-# 		window.blit(txt, txt_rect)
+def new_game():
+    wn.destroy()
+    os.system("python3 game.py")
 
+# MAIN STUFF
+lbl = tk.Label(wn, text="nicolas tovt: the game", font=("Arial", 40), background=bg)
+lbl.place(x=c.WIDTH/5, y=100)
 
-# main loop
-while run:
-	for e in pygame.event.get():
-		if e.type == pygame.QUIT: run = False
+btn1 = tk.Button(wn, text = "New Game", font=("Arial", 40), width=9,command=new_game,background="cyan")
+btn1.place(x=c.WIDTH/5, y=200)
 
-	# MAIN EVENTS
-	window.fill("skyblue")
-	window.blit(nadpis, nadpis_rect)
+btn2 = tk.Button(wn, text = "Load Game", font=("Arial", 40), width=9,state="disabled",background="cyan")
+btn2.place(x=c.WIDTH/5, y=280)
 
-	# update screen
-	pygame.display.update()
+btn3 = tk.Button(wn, text = "Credits", font=("Arial", 40), width=9,command=credits,background="cyan")
+btn3.place(x=c.WIDTH/5, y=360)
 
-pygame.quit()
+btn4 = tk.Button(wn, text = "Exit", font=("Arial", 40), width=9,command=wn.destroy,background="cyan")
+btn4.place(x=c.WIDTH/5, y=440)
+
+# MAIN LOOP
+wn.mainloop()
