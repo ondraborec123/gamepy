@@ -5,7 +5,7 @@ import settings as s
 
 # BASE SETTINGS
 pygame.init()
-ACTIVE_RES=3
+ACTIVE_RES=2
 window = pygame.display.set_mode(s.resolutions[ACTIVE_RES])
 WIDTH=s.resolutions[ACTIVE_RES][0]
 HEIGHT=s.resolutions[ACTIVE_RES][1]
@@ -40,8 +40,12 @@ def player_function():
 	keys = pygame.key.get_pressed()
 	if keys[pygame.K_w] and player.y > 0 or keys[pygame.K_UP] and player.y > 0: player.y -= player.vel
 	if keys[pygame.K_s] and player.y < HEIGHT-96 or keys[pygame.K_DOWN] and player.y < HEIGHT-96: player.y += player.vel
-	if keys[pygame.K_a] and player.x > -18 or keys[pygame.K_LEFT] and player.x > 0-18: player.x -= player.vel
-	if keys[pygame.K_d] and player.x < WIDTH-78 or keys[pygame.K_RIGHT] and player.x < WIDTH-78: player.x += player.vel
+	if keys[pygame.K_a] and player.x > -18 or keys[pygame.K_LEFT] and player.x > 0-18:
+		player.x -= player.vel
+		plr = pygame.image.load("assets/spritesheetLEFT.png")
+	if keys[pygame.K_d] and player.x < WIDTH-78 or keys[pygame.K_RIGHT] and player.x < WIDTH-78:
+		player.x += player.vel
+		plr = pygame.image.load("assets/spritesheetRIGHT.png")
 	if keys[pygame.K_ESCAPE]: run = False
 
 
